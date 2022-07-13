@@ -2,9 +2,7 @@ package br.ufu.succotash.model;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity(name = "users")
@@ -14,11 +12,18 @@ public class User {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     @NotNull private String fullName;
-    @NotNull private String username;
+    @NotNull @Column(unique = true) private String username;
     @NotNull private String password;
-    @NotNull private Role role;
+    @NotNull @Enumerated(EnumType.STRING) private Role role;
 
     private User() {}
+
+    public User(String fullName, String username, String password, Role role) {
+        this.fullName = fullName;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
     public String getFullName() {
         return fullName;
