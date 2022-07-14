@@ -30,15 +30,11 @@ public class User {
     }
 
     public void setFullName(String fullName) {
-        this.fullName = fullName;
+        if (fullName != null && !fullName.isBlank()) this.fullName = fullName;
     }
 
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -46,7 +42,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password != null && !password.isBlank()) this.password = password;
     }
 
     public Role getRole() {
@@ -54,7 +50,7 @@ public class User {
     }
 
     public void setRole(Role role) {
-        this.role = role;
+        if (role != null) this.role = role;
     }
 
     public String getId() {

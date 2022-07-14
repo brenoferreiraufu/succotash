@@ -1,4 +1,4 @@
-package br.ufu.succotash.controller.response;
+package br.ufu.succotash.controller.user.response;
 
 import br.ufu.succotash.model.Role;
 import br.ufu.succotash.model.User;

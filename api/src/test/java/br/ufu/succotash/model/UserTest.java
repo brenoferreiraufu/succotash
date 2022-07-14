@@ -60,7 +60,6 @@ public class UserTest {
 
         expectedUser.setPassword("fulanosantos");
         expectedUser.setFullName("Fulano dos Santos");
-        expectedUser.setUsername("fulanosantos");
         expectedUser.setRole(Role.WORKER);
 
         var actualUser = repository.save(expectedUser);
