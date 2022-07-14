@@ -6,6 +6,7 @@ import br.ufu.succotash.controller.user.response.UserResponse;
 import br.ufu.succotash.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -18,10 +19,11 @@ import java.net.URI;
 public class UserController {
 
     @Autowired private UserRepository userRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
 
     @PostMapping
     public ResponseEntity<Object> newUser(@Valid @RequestBody UserRequest user) {
-        var userId = userRepository.save(user.toModel()).getId();
+        var userId = userRepository.save(user.toModel(passwordEncoder)).getId();
         var location = URI.create("/api/v1/users/".concat(userId));
         return ResponseEntity.ok().location(location).build();
     }
