@@ -22,7 +22,7 @@ public class UserController {
     @Autowired private PasswordEncoder passwordEncoder;
 
     @PostMapping
-    public ResponseEntity<Object> newUser(@Valid @RequestBody UserRequest user) {
+    public ResponseEntity<?> newUser(@Valid @RequestBody UserRequest user) {
         var userId = userRepository.save(user.toModel(passwordEncoder)).getId();
         var location = URI.create("/api/v1/users/".concat(userId));
         return ResponseEntity.ok().location(location).build();
