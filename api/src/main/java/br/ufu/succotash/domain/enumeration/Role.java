@@ -1,4 +1,4 @@
-package br.ufu.succotash.model;
+package br.ufu.succotash.domain.model;
 
 public enum Role {
     WORKER, CLIENT
