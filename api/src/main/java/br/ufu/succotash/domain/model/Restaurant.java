@@ -1,4 +1,4 @@
-package br.ufu.succotash.model;
+package br.ufu.succotash.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,7 +1,7 @@
 package br.ufu.succotash.controller.user.request;
 
-import br.ufu.succotash.model.Role;
-import br.ufu.succotash.model.User;
+import br.ufu.succotash.domain.enumeration.Role;
+import br.ufu.succotash.domain.model.User;
 
 public record UserUpdateRequest(
         String fullName,

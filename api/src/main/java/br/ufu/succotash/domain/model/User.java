@@ -1,5 +1,6 @@
-package br.ufu.succotash.model;
+package br.ufu.succotash.domain.model;
 
+import br.ufu.succotash.domain.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
