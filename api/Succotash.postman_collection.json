@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "4966711f-df27-4f10-ab7e-0cc2b93d666d",
+		"name": "Succotash",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "newUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fullName\": \"Fulano da Silva\",\n    \"username\": \"fulanosilva1\",\n    \"password\": \"qualquercoisa\",\n    \"role\": \"WORKER\"\n}"
+				},
+				"url": {
+					"raw": "{{env}}/api/v1/users",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findUser",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{env}}/api/v1/users/db0548a3-6212-4fdd-93c8-1063826baae3",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"db0548a3-6212-4fdd-93c8-1063826baae3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"pm.environment.set(\"authorization\", `Bearer ${response.token}`)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"fulanosilva1\",\n    \"password\": \"qualquercoisa\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/api/v1/auth",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
