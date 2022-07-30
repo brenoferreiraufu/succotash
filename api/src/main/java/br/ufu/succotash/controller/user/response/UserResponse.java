@@ -1,7 +1,7 @@
 package br.ufu.succotash.controller.user.response;
 
-import br.ufu.succotash.model.Role;
-import br.ufu.succotash.model.User;
+import br.ufu.succotash.domain.enumeration.Role;
+import br.ufu.succotash.domain.model.User;
 import org.springframework.http.ResponseEntity;
 
 public record UserResponse(String fullName, String username, Role role) {

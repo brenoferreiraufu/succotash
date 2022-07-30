@@ -2,6 +2,8 @@ package br.ufu.succotash.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import br.ufu.succotash.domain.enumeration.Role;
+import br.ufu.succotash.domain.model.User;
 import br.ufu.succotash.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
