@@ -1,3 +1,5 @@
 package br.ufu.succotash.controller.auth.request;
 
-public record AuthRequest(String username, String password) { }
+import javax.validation.constraints.NotBlank;
+
+public record AuthRequest(@NotBlank String username, @NotBlank String password) { }

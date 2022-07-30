@@ -4,8 +4,11 @@ import br.ufu.succotash.controller.user.request.UserRequest;
 import br.ufu.succotash.controller.user.response.UserResponse;
 import br.ufu.succotash.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -14,10 +17,9 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/v1/users")
 @Transactional
-@RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    @Autowired private UserService userService;
 
     @PostMapping
     public ResponseEntity<?> newUser(@Valid @RequestBody UserRequest user) {
@@ -29,7 +31,8 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> findUser(@PathVariable String userId) {
         var retrievedUser = userService.findUser(userId);
-        return retrievedUser.map(UserResponse::toResponseEntity).orElseGet(() -> ResponseEntity.notFound().build());
+        return retrievedUser.map(UserResponse::toResponseEntity)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
 }
