@@ -4,6 +4,8 @@ import br.ufu.succotash.controller.user.request.UserRequest;
 import br.ufu.succotash.controller.user.request.UserUpdateRequest;
 import br.ufu.succotash.controller.user.response.UserResponse;
 import br.ufu.succotash.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +19,8 @@ import java.net.URI;
 @RequestMapping("/api/v1/users")
 @Transactional
 public class UserController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired private UserRepository userRepository;
     @Autowired private PasswordEncoder passwordEncoder;
