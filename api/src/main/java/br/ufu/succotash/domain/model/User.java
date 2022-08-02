@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
@@ -22,32 +23,27 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
-    @NotNull private String fullName;
-    @NotNull @Column(unique = true) private String username;
-    @NotNull private String password;
-    @NotNull @Enumerated(EnumType.STRING) private Role role;
+    @NotBlank
+    private String fullName;
+    @NotBlank
+    @Column(unique = true)
+    private String username;
+    @NotBlank
+    private String password;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public User(String fullName, String username, String password, Role role) {
         this.fullName = fullName;
         this.username = username;
         this.password = password;
         this.role = role;
-    }
-
-    public void setFullName(String fullName) {
-        if (fullName != null && !fullName.isBlank()) this.fullName = fullName;
-    }
-
-    public void setPassword(String password) {
-        if (password != null && !password.isBlank()) this.password = password;
-    }
-
-    public void setRole(Role role) {
-        if (role != null) this.role = role;
     }
 
     @Override
@@ -74,5 +70,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 
 }

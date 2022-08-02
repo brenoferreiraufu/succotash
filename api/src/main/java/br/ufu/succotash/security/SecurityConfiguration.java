@@ -30,7 +30,8 @@ public class SecurityConfiguration {
         http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
         http.authorizeHttpRequests((authorize) -> authorize
                 .antMatchers(HttpMethod.POST,"/api/v1/auth").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/user/*").permitAll() //
                 .anyRequest().authenticated());
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

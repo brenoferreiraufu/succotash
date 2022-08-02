@@ -2,8 +2,8 @@ package br.ufu.succotash.security.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -17,10 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    @Autowired private JwtUserDetailsService jwtUserDetailsService;
-    @Autowired private JwtUtil jwtTokenUtil;
+     private final JwtUserDetailsService jwtUserDetailsService;
+     private final JwtUtil jwtTokenUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

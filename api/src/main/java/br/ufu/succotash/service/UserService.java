@@ -17,7 +17,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     public String newUser(UserRequest user) {
         return userRepository.save(user.toModel(passwordEncoder)).getId();
     }

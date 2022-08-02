@@ -27,7 +27,8 @@ public class Restaurant {
     @NotNull
     private String name;
 
-    @NotNull @OneToMany(cascade = CascadeType.ALL)
+    @NotNull
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Table> tables;
 
 

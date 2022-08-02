@@ -25,17 +25,32 @@ public class Order {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+
     @ManyToOne
     private User user;
-    @NotNull @ManyToOne
+
+    @NotNull
+    @ManyToOne
     private Table table;
-    @NotNull @Enumerated(EnumType.STRING)
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
     @NotNull
     private final LocalDateTime createdAt = LocalDateTime.now();
+
     @NotNull
     private LocalDateTime updatedAt = LocalDateTime.now();
-    @NotNull @ManyToMany
+
+    @NotNull
+    @ManyToMany
     private List<Item> items;
 
+    public Order(User user, Table table, List<Item> items) {
+        this.user = user;
+        this.table = table;
+        this.status = OrderStatus.COMPLETED;
+        this.items = items;
+    }
 }

@@ -1,6 +1,4 @@
-package br.ufu.succotash.validation;
-
-import br.ufu.succotash.validation.UniqueValidator;
+package br.ufu.succotash.domain.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

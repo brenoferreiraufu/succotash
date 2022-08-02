@@ -1,4 +1,4 @@
-package br.ufu.succotash.validation;
+package br.ufu.succotash.domain.validation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

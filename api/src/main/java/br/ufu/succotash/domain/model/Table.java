@@ -30,10 +30,12 @@ public class Table {
     @NotNull
     private String urlQrCode;
 
-    @NotNull @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL)
     private Restaurant restaurant;
 
-    @NotNull @Enumerated(EnumType.STRING)
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private TableStatus status;
 
 }

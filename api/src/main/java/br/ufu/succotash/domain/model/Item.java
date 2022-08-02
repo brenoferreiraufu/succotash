@@ -23,15 +23,21 @@ public class Item {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+
     @NotNull
     private String image;
+
     @NotNull
     private String name;
+
     @NotNull
     private String description;
+
     @NotNull
     private BigDecimal price;
-    @NotNull @ManyToOne(cascade = CascadeType.ALL)
+
+    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL)
     private Restaurant restaurant;
 
 }
