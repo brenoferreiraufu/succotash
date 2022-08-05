@@ -31,5 +31,8 @@ public class Restaurant {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Table> tables;
 
-
+    public Restaurant(String name, List<Table> tables) {
+        this.name = name;
+        this.tables = tables;
+    }
 }

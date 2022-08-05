@@ -1,26 +1,22 @@
 package br.ufu.succotash.controller.restaurant.request;
 
-import br.ufu.succotash.domain.model.Item;
-import br.ufu.succotash.domain.model.Order;
-import br.ufu.succotash.domain.model.Table;
-import br.ufu.succotash.domain.model.User;
+import br.ufu.succotash.domain.model.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public record RestaurantRequest(
 
-        @NotNull
-        User user,
+       @NotBlank
+       String name,
 
-        @NotNull
-        Table table,
+       @NotNull
+       List<Table> tables
+) {
 
-        @NotNull
-        List<Item> items) {
-
-    public Order toModel() {
-        return new Order(user, table, items);
+    public Restaurant toModel() {
+        return new Restaurant(name, tables);
     }
 
 }

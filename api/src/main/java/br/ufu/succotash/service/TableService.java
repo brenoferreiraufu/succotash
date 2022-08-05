@@ -11,9 +11,9 @@ public class TableService {
 
     private final TableRepository tableRepository;
 
-    //public String newTable(TableRequest table) {
-    //    return tableRepository.save(table);
-    //}
+    public String newTable(TableRequest table) {
+        return tableRepository.save(table.toModel()).getId();
+    }
 
     //public Optional<User> findUser(String userId) {
     //    return userRepository.findById(userId);
