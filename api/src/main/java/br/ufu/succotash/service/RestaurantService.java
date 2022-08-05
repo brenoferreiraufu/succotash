@@ -4,11 +4,19 @@ import br.ufu.succotash.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @RequiredArgsConstructor
-public class RestauranteService {
+public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
 
+    //public String newRestaurant(RestaurantRequest restaurant) {
+    //    return restaurantRepository.save(restaurant);
+    //}
+
+    //public Optional<User> findRestaurant(String id) {
+    //    return null;
+    ///}
 
 }
