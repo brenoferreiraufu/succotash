@@ -9,7 +9,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 @Entity(name = "restaurants")
@@ -27,12 +26,7 @@ public class Restaurant {
     @NotNull
     private String name;
 
-    @NotNull
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Table> tables;
-
-    public Restaurant(String name, List<Table> tables) {
+    public Restaurant(String name) {
         this.name = name;
-        this.tables = tables;
     }
 }

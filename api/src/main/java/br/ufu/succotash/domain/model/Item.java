@@ -36,8 +36,8 @@ public class Item {
     @NotNull
     private BigDecimal price;
 
-    @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
 }

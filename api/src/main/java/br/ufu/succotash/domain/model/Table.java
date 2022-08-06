@@ -30,8 +30,8 @@ public class Table {
     @NotNull
     private String urlQrCode;
 
-    @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
     @NotNull

@@ -27,10 +27,12 @@ public class Order {
     private String id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "table_id")
     private Table table;
 
     @NotNull
@@ -43,14 +45,9 @@ public class Order {
     @NotNull
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @NotNull
-    @ManyToMany
-    private List<Item> items;
-
-    public Order(User user, Table table, List<Item> items) {
+    public Order(User user, Table table) {
         this.user = user;
         this.table = table;
         this.status = OrderStatus.COMPLETED;
-        this.items = items;
     }
 }
