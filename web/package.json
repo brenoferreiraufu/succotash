@@ -9,9 +9,12 @@
     "lint": "eslint src --max-warnings=0"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.6",
     "@chakra-ui/react": "^2.2.4",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@fontsource/open-sans": "^4.5.10",
+    "@fontsource/raleway": "^4.5.9",
     "framer-motion": "^6",
     "next": "12.2.3",
     "react": "18.2.0",
