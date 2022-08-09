@@ -20,8 +20,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<?> newOrder(@Valid @RequestBody OrderRequest order) {
-        String orderId = orderService.newOrder(order);
+    public ResponseEntity<?> newOrder(@Valid @RequestBody OrderRequest orderItem) {
+        String orderId = orderService.newOrder(orderItem);
         URI location = URI.create("/api/v1/order/".concat(orderId));
         return ResponseEntity.ok().location(location).build();
     }
@@ -30,4 +30,6 @@ public class OrderController {
     public ResponseEntity<UserResponse> findOrder(@PathVariable String userId) {
         return null;
     }
+
+
 }

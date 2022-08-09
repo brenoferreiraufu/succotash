@@ -38,5 +38,4 @@ public class UserController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-
 }

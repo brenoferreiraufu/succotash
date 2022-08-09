@@ -26,6 +26,7 @@ public class Order {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -37,7 +38,7 @@ public class Order {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private OrderStatus status = OrderStatus.COMPLETED;
 
     @NotNull
     private final LocalDateTime createdAt = LocalDateTime.now();

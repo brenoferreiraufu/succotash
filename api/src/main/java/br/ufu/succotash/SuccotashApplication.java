@@ -60,4 +60,22 @@ public class SuccotashApplication {
 
 	}
 
+	/*
+	{
+ "order":{
+      "user": { "id": "ed4a9784-575b-4fca-adf6-0c135954a5ef" },
+      "table": { "id": "3ed4e9a9-9964-44ad-ad78-e5954d378ca5"}
+ },
+ "items":[
+          { "id": "2567585e-63e5-4368-8847-5263ecee8c9a"},
+          { "id": "5e42bbe1-d7f6-4cbb-9f03-66f09f0ea5e9"},
+          { "id": "8712b57e-9a74-4950-a22c-ef26c546da34"},
+          { "id": "66261ca1-0d0c-4e40-8519-0ff44b421ace"}
+      ],
+ "quantities":[
+     1,2,3,4
+ ]
+}
+	 */
+
 }

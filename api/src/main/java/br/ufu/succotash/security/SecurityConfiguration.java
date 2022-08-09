@@ -32,6 +32,10 @@ public class SecurityConfiguration {
                 .antMatchers(HttpMethod.POST,"/api/v1/auth").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/user/*").permitAll() //
+                .antMatchers(HttpMethod.POST, "/api/v1/order").permitAll()
+
+                .antMatchers(HttpMethod.POST, "/api/v1/order/*").permitAll()
+
                 .anyRequest().authenticated());
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
