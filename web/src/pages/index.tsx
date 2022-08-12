@@ -8,7 +8,7 @@ type LoginForm = {
   password: string
 }
 
-const Home: NextPage = () => {
+const Login: NextPage = () => {
   const [show, setShow] = useState(false)
 
   const [loginFormValues, setLoginFormValues] = useState<LoginForm>({
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <Flex height="100vh" alignItems="center" justifyContent="center" bgColor="">
+    <Flex height="100vh" alignItems="center" justifyContent="center">
       <Flex direction="column" p={12} rounded={6} alignItems="center">
         <img src="/images/logo_transparent.png" alt="Foto de um restaurante" width={250} />
         <form onSubmit={handleSubmitForm}>
@@ -67,4 +67,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Login
