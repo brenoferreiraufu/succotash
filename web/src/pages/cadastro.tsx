@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
+
 type RegisterForm = {
   fullName: string
   username: string
@@ -21,7 +22,7 @@ type RegisterForm = {
   confirmPassword: string
 }
 
-const Home: NextPage = () => {
+const Register: NextPage = () => {
   const [registerFormValues, setRegisterFormValues] = useState<RegisterForm>({
     fullName: '',
     username: '',
@@ -127,4 +128,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Register
