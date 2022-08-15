@@ -1,7 +1,6 @@
 package br.ufu.succotash.controller.order;
 
 import br.ufu.succotash.controller.order.request.OrderRequest;
-import br.ufu.succotash.controller.user.response.UserResponse;
 import br.ufu.succotash.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +25,14 @@ public class OrderController {
         return ResponseEntity.ok().location(location).build();
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<UserResponse> findOrder(@PathVariable String userId) {
-        return null;
+    @GetMapping("/{orderId}")
+    public ResponseEntity<?> findOrder(@PathVariable String orderId) {
+        return ResponseEntity.ok(orderService.findOrder(orderId));
     }
 
-
+    @PostMapping("/{orderId}/pay")
+    public ResponseEntity<?> payOrder(@PathVariable String orderId) {
+        orderService.payOrder(orderId);
+        return ResponseEntity.ok().build();
+    }
 }

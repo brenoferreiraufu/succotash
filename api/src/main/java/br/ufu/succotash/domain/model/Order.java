@@ -38,7 +38,7 @@ public class Order {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private OrderStatus status = OrderStatus.COMPLETED;
+    private OrderStatus status = OrderStatus.IN_PREPARATION;
 
     @NotNull
     private final LocalDateTime createdAt = LocalDateTime.now();
