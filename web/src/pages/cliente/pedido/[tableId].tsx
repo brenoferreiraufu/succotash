@@ -1,7 +1,20 @@
 import React, { useEffect } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Flex, Button, Text, Table, Thead, Tbody, Tr, Th, Td, TableContainer, TableCaption } from '@chakra-ui/react'
+import {
+  Container,
+  Flex,
+  Button,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  TableCaption
+} from '@chakra-ui/react'
 
 const Restaurant: NextPage = () => {
   const router = useRouter()
@@ -21,8 +34,8 @@ const Restaurant: NextPage = () => {
   }
 
   return (
-    <>
-      <Flex direction="column" height="100%" alignItems="center" justifyContent="center" p={3}>
+    <Flex direction="column" height="100%" alignItems="center" justifyContent="center" p={3}>
+      <Container centerContent p={3}>
         <Text fontSize="xl" fontWeight="bold">
           Restaurante Xpto
         </Text>
@@ -70,8 +83,8 @@ const Restaurant: NextPage = () => {
         <Button colorScheme="blue" onClick={handleClickPayOrder} mt={5}>
           Pagar Conta
         </Button>
-      </Flex>
-    </>
+      </Container>
+    </Flex>
   )
 }
 

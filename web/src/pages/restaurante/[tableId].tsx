@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import {
   Flex,
@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react'
 import Header, { headerHeight } from 'components/Header'
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
+import { parseCookies } from 'nookies'
 
 type OrderItem = {
   idItem: string
@@ -166,6 +167,23 @@ const Restaurant: NextPage = () => {
       </Flex>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['nextauth.token']: token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
 }
 
 export default Restaurant
