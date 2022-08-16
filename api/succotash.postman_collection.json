@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "c3835389-a4f7-4eb1-9d33-2e0d0f6fa07e",
+		"name": "succotash",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16525098"
+	},
+	"item": [
+		{
+			"name": "New Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"order\":{\r\n      \"user\": { \"id\": \"ed4a9784-575b-4fca-adf6-0c135954a5ef\" },\r\n      \"table\": { \"id\": \"3ed4e9a9-9964-44ad-ad78-e5954d378ca5\"}\r\n },\r\n \"items\":[\r\n     {\r\n        \"item\": { \"id\": \"33ed2600-b397-4ee8-bfdc-d97b31136b56\" },\r\n        \"quantity\":100\r\n     },\r\n      {\r\n        \"item\": { \"id\": \"8712b57e-9a74-4950-a22c-ef26c546da34\" },\r\n        \"quantity\":2\r\n     },\r\n      {\r\n        \"item\": { \"id\": \"31847cf3-6429-4654-9ed6-c74db3c1927f\" },\r\n        \"quantity\":20\r\n     },\r\n      {\r\n        \"item\": { \"id\": \"41839771-2cfe-4c05-8940-9edcb882edef\" },\r\n        \"quantity\":10\r\n     }\r\n  ]\r\n}\r\n\r\n// valor <= 1000 -> 200\r\n// valor > 1000 -> m412\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/order",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"Euller Henrique Bandeira Oliveira\",\r\n    \"username\": \"eullerhboo\",\r\n    \"password\":\"12345\",\r\n    \"role\":\"WORKER\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Pay",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/order/552fc20f-f97d-45b3-925e-f96065a5ccde/pay",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"552fc20f-f97d-45b3-925e-f96065a5ccde",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
