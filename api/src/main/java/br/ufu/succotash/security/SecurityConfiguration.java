@@ -1,6 +1,5 @@
 package br.ufu.succotash.security;
 
-import br.ufu.succotash.domain.enumeration.Role;
 import br.ufu.succotash.security.jwt.JwtAuthenticationEntryPoint;
 import br.ufu.succotash.security.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +30,20 @@ public class SecurityConfiguration {
         http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
         http.authorizeHttpRequests((authorize) -> authorize
                 .antMatchers(HttpMethod.POST,"/api/v1/auth").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/v1/user/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/order/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/order").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/order/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/order/*/pay").permitAll()
+
+
                 .anyRequest().authenticated());
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
