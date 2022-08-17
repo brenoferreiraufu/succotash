@@ -4,6 +4,7 @@ import br.ufu.succotash.controller.auth.request.AuthRequest;
 import br.ufu.succotash.controller.auth.response.AuthResponse;
 import br.ufu.succotash.security.jwt.JwtUserDetailsService;
 import br.ufu.succotash.security.jwt.JwtUtil;
+import br.ufu.succotash.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,28 +22,12 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    private final JwtUtil jwtUtil;
-
-    private final JwtUserDetailsService jwtUserDetailsService;
-
-    private final AuthenticationManager authenticationManager;
+    private final AuthService authService;
 
     @PostMapping
     public ResponseEntity<?> generateAuthenticationToken(@Valid @RequestBody AuthRequest authRequest) {
-
-        authenticate(authRequest.username(), authRequest.password());
-
-        var userDetails = jwtUserDetailsService.loadUserByUsername(authRequest.username());
-        var token = jwtUtil.generateToken(userDetails);
-
+        var token = authService.authenticate(authRequest.username(), authRequest.password());
         return ResponseEntity.ok(new AuthResponse(token));
-    }
-
-    private void authenticate(String username, String password) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 
 }

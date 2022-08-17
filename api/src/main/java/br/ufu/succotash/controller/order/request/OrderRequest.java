@@ -8,16 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record OrderRequest(
-
-        @NotNull
-        Order order,
-
         @NotNull
         List<ItemQuantity> items
-
 ) {
-
-    public List<OrderItem> toModel() {
+    public List<OrderItem> toModel(Order order) {
         List<OrderItem> orderItems = new ArrayList<>();
         for (ItemQuantity item: items) {
             orderItems.add(new OrderItem(order, item.item(), item.quantity()));

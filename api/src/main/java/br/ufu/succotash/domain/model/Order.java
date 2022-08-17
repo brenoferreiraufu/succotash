@@ -46,4 +46,8 @@ public class Order {
     @NotNull
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+    public Order(User user, Table table) {
+        this.user = user;
+        this.table = table;
+    }
 }
