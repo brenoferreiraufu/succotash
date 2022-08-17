@@ -50,4 +50,8 @@ public class Order {
         this.user = user;
         this.table = table;
     }
+
+    public boolean isStatusCompleted() {
+        return status == OrderStatus.COMPLETED;
+    }
 }

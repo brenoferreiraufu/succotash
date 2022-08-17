@@ -58,6 +58,11 @@ public class OrderService {
 
     public void payOrder(String orderId) {
         var order = findOrder(orderId);
+
+        if (order.isStatusCompleted()) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
         var orderItems = orderItemRepository.findByOrder(order);
 
         var total = new BigDecimal(0);

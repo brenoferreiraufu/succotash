@@ -2,6 +2,7 @@ package br.ufu.succotash.controller.order;
 
 import br.ufu.succotash.controller.order.request.NewOrderRequest;
 import br.ufu.succotash.controller.order.request.OrderRequest;
+import br.ufu.succotash.controller.order.response.OrderResponse;
 import br.ufu.succotash.domain.model.User;
 import br.ufu.succotash.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,9 @@ public class OrderController {
 
     @GetMapping("/{orderId}")
     public ResponseEntity<?> findOrder(@PathVariable String orderId) {
-        return ResponseEntity.ok(orderService.findOrder(orderId));
+        var order = orderService.findOrder(orderId);
+        var orderItems = orderService.findOrderItemsByOrder(order);
+        return ResponseEntity.ok(OrderResponse.build(order, orderItems));
     }
 
     @PostMapping("/{orderId}/pay")

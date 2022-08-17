@@ -31,6 +31,7 @@ public class TableController {
         return ResponseEntity.ok(tableService.findTableByRestaurant().stream().map(TableResponse::toTableResponse).collect(Collectors.toList()));
     }
 
+
     @GetMapping("/{tableId}/order")
     public ResponseEntity<OrderResponse> getTableLastOrder(@PathVariable String tableId) {
         var order = orderService.findLastOrderByTableIdAndStatus(OrderStatus.IN_PREPARATION, tableId);
