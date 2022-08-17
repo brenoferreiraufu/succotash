@@ -36,7 +36,7 @@ public class SuccotashApplication {
 
 
 		Restaurant restaurant = restaurantRepository.save(Restaurant.builder()
-													.name("Restaurant 1")
+													.name("Succotash")
 													.build());
 
 		for(int i = 1; i <= 20; i++) {

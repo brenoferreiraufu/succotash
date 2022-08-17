@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                 .antMatchers(HttpMethod.POST, "/api/v1/order").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/order/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/order/*/pay").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/table/*").permitAll()
 
 
                 .anyRequest().authenticated());

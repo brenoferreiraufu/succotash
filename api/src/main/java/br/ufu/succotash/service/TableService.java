@@ -1,9 +1,13 @@
 package br.ufu.succotash.service;
 
 import br.ufu.succotash.controller.table.request.TableRequest;
+import br.ufu.succotash.domain.model.Table;
 import br.ufu.succotash.repository.TableRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,9 +19,9 @@ public class TableService {
         return tableRepository.save(table.toModel()).getId();
     }
 
-    //public Optional<User> findUser(String userId) {
-    //    return userRepository.findById(userId);
-    //}
+    public List<Table> findTableByRestaurant() {
+        return tableRepository.findByRestaurantName("Succotash");
+    }
 
 
 }
