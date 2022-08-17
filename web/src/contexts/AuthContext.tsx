@@ -1,64 +1,57 @@
-import { createContext, useEffect, useState } from 'react'
-import { setCookie, parseCookies } from 'nookies'
+import { createContext, useState } from 'react'
+import { setCookie, destroyCookie } from 'nookies'
 import Router from 'next/router'
 
-import { signInRequest } from '../services/auth'
-import { api } from '../services/api'
 import { CommonHeaderProperties } from 'services/axios'
-
-type User = {
-  name: string
-  email: string
-  avatar_url: string
-}
+import { api } from 'services/api'
+import { signInRequest } from 'services/auth'
 
 type SignInData = {
-  email: string
+  username: string
   password: string
 }
 
 type AuthContextType = {
-  isAuthenticated: boolean
-  user: User | null
+  isAuthenticated: boolean | null
   signIn: (data: SignInData) => Promise<void>
+  logout: () => void
 }
 
 export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
 
-  const isAuthenticated = !!user
+  async function signIn({ username, password }: SignInData) {
+    const { token } = await signInRequest({
+      username,
+      password
+    })
 
-  useEffect(() => {
-    const { 'nextauth.token': token } = parseCookies()
+    setIsAuthenticated(true)
 
-    // if (token) {
-    //   recoverUserInformation().then((response) => {
-    //     setUser(response.user)
-    //   })
-    // }
-  }, [])
+    setCookie(undefined, 'nextauth.token', token, {
+      maxAge: 60 * 60 * 1 // 1 hour
+    })
 
-  async function signIn({ email, password }: SignInData) {
-    // const { token, user } = await signInRequest({
-    //   email,
-    //   password
-    // })
-
-    // setCookie(undefined, 'nextauth.token', token, {
-    //   maxAge: 60 * 60 * 1 // 1 hour
-    // })
-
-    // api.defaults.headers = {
-    //   ...api.defaults.headers,
-    //   Authorization: `Bearer ${token}`
-    // } as CommonHeaderProperties
-
-    // setUser(user)
-
-    Router.push('/dashboard')
+    api.defaults.headers = {
+      ...api.defaults.headers,
+      Authorization: `Bearer ${token}`
+    } as CommonHeaderProperties
   }
 
-  return <AuthContext.Provider value={{ user, isAuthenticated, signIn }}>{children}</AuthContext.Provider>
+  function logout() {
+    setIsAuthenticated(false)
+
+    destroyCookie(undefined, 'nextauth.token')
+
+    api.defaults.headers = {
+      ...api.defaults.headers,
+      Authorization: ''
+    } as CommonHeaderProperties
+
+    Router.push('/')
+  }
+
+  return <AuthContext.Provider value={{ isAuthenticated, signIn, logout }}>{children}</AuthContext.Provider>
 }

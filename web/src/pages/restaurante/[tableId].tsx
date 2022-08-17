@@ -62,12 +62,6 @@ const Restaurant: NextPage = () => {
     }
   }
 
-  const handleClickEndService = () => {
-    // api call
-    console.log('Atendimento finalizado')
-    router.back()
-  }
-
   const handleClickRemoveItem = (id: string) => {
     // api call
     console.log(`Item ${id} removido`)
@@ -75,7 +69,7 @@ const Restaurant: NextPage = () => {
 
   return (
     <>
-      <Header />
+      <Header backButton />
       <Flex
         direction="column"
         height={`calc(100% - ${headerHeight}px)`}
@@ -161,8 +155,8 @@ const Restaurant: NextPage = () => {
           <Input value={orderItem.quantity} placeholder="Quantidade" onChange={handleInputChange} width={220} />
           <IconButton aria-label="Adicionar ao pedido" icon={<AddIcon />} onClick={handleAddOrderItem} />
         </Flex>
-        <Button colorScheme="blue" onClick={handleClickEndService} mt={5}>
-          Finalizar Atendimento
+        <Button colorScheme="blue" onClick={router.back} mt={5}>
+          Voltar
         </Button>
       </Flex>
     </>

@@ -30,11 +30,8 @@ public class SecurityConfiguration {
         http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
         http.authorizeHttpRequests((authorize) -> authorize
                 .antMatchers(HttpMethod.POST,"/api/v1/auth").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/v1/user/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/order/*").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/order").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/order/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/table/*/order").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/order/*/pay").permitAll()
                 .anyRequest().authenticated());
 
