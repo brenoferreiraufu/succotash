@@ -1,64 +1,12 @@
 {
 	"info": {
-		"_postman_id": "c3835389-a4f7-4eb1-9d33-2e0d0f6fa07e",
-		"name": "succotash",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16525098"
+		"_postman_id": "4966711f-df27-4f10-ab7e-0cc2b93d666d",
+		"name": "Succotash",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "New Order",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n \"order\":{\r\n      \"user\": { \"id\": \"ed4a9784-575b-4fca-adf6-0c135954a5ef\" },\r\n      \"table\": { \"id\": \"3ed4e9a9-9964-44ad-ad78-e5954d378ca5\"}\r\n },\r\n \"items\":[\r\n     {\r\n        \"item\": { \"id\": \"33ed2600-b397-4ee8-bfdc-d97b31136b56\" },\r\n        \"quantity\":100\r\n     },\r\n      {\r\n        \"item\": { \"id\": \"8712b57e-9a74-4950-a22c-ef26c546da34\" },\r\n        \"quantity\":2\r\n     },\r\n      {\r\n        \"item\": { \"id\": \"31847cf3-6429-4654-9ed6-c74db3c1927f\" },\r\n        \"quantity\":20\r\n     },\r\n      {\r\n        \"item\": { \"id\": \"41839771-2cfe-4c05-8940-9edcb882edef\" },\r\n        \"quantity\":10\r\n     }\r\n  ]\r\n}\r\n\r\n// valor <= 1000 -> 200\r\n// valor > 1000 -> 412\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/api/v1/order",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"order"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "New Pay",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/v1/order/552fc20f-f97d-45b3-925e-f96065a5ccde/pay",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"order",
-						"552fc20f-f97d-45b3-925e-f96065a5ccde",
-						"pay"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "New User",
+			"name": "newUser",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -75,14 +23,13 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"fullName\": \"Fulano da Silva\",\n    \"username\": \"fulanosilva1\",\n    \"password\": \"qualquercoisa\",\n    \"role\": \"WORKER\"\n}"
+					"raw": "{\n    \"fullName\": \"Fulano da Silva\",\n    \"username\": \"fulanosilva132\",\n    \"password\": \"qualquercoisa\",\n    \"role\": \"WORKER\"\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/api/v1/user",
+					"raw": "{{env}}/api/v1/user",
 					"host": [
-						"localhost"
+						"{{env}}"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -93,7 +40,7 @@
 			"response": []
 		},
 		{
-			"name": "Find User",
+			"name": "findUser",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -109,23 +56,22 @@
 					}
 				],
 				"url": {
-					"raw": "localhost:8080/api/v1/user/db0548a3-6212-4fdd-93c8-1063826baae3",
+					"raw": "{{env}}/api/v1/user/86c30d75-8017-4e1f-950e-d3afe6ca769f",
 					"host": [
-						"localhost"
+						"{{env}}"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
 						"user",
-						"db0548a3-6212-4fdd-93c8-1063826baae3"
+						"86c30d75-8017-4e1f-950e-d3afe6ca769f"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Auth",
+			"name": "auth",
 			"event": [
 				{
 					"listen": "test",
@@ -143,7 +89,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"fulanosilva1\",\n    \"password\": \"qualquercoisa\"\n}",
+					"raw": "{\n    \"username\": \"fulanosilva3\",\n    \"password\": \"qualquercoisa\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -151,15 +97,269 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/v1/auth",
+					"raw": "{{env}}/api/v1/auth",
 					"host": [
-						"localhost"
+						"{{env}}"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
 						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "newOrder",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tableId\": \"adec22f4-6053-4f8c-ba78-995f59392b9e\"\n}"
+				},
+				"url": {
+					"raw": "{{env}}/api/v1/order",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pay",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{env}}/api/v1/order/0e4da022-b978-4a40-ae27-3c643b532b8d/pay",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"0e4da022-b978-4a40-ae27-3c643b532b8d",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editOrder",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"items\":[\n     {\n        \"item\": { \"id\": \"116c4524-2b1d-4e65-8d13-f310e54c430d\" }    ,\n        \"quantity\":100\n     },\n      {\n        \"item\": { \"id\": \"06b382ce-3223-440c-b9f7-94ac5287a3fb\" },\n        \"quantity\":2\n     },\n      {\n        \"item\": { \"id\": \"d79408ee-7573-4186-9f76-14849537fc4e\" },\n        \"quantity\":20\n     },\n      {\n        \"item\": { \"id\": \"b6773d77-ce39-4ff3-badb-d2750e245963\" },\n        \"quantity\":10\n     }\n  ]\n}"
+				},
+				"url": {
+					"raw": "{{env}}/api/v1/order/d76fd672-217a-4684-a5ab-d4c473646141",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"d76fd672-217a-4684-a5ab-d4c473646141"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTables",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{env}}/api/v1/table",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"table"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getItems",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{env}}/api/v1/item",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findOrder",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{env}}/api/v1/order/d76fd672-217a-4684-a5ab-d4c473646141",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"d76fd672-217a-4684-a5ab-d4c473646141"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTableById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{env}}/api/v1/table/adec22f4-6053-4f8c-ba78-995f59392b9e",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"table",
+						"adec22f4-6053-4f8c-ba78-995f59392b9e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTableOrder",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{env}}/api/v1/table/adec22f4-6053-4f8c-ba78-995f59392b9e/order",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"table",
+						"adec22f4-6053-4f8c-ba78-995f59392b9e",
+						"order"
 					]
 				}
 			},
