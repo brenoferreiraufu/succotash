@@ -1,17 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import type { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { Flex, Button, Select, Text, Box } from '@chakra-ui/react'
 import Header, { headerHeight } from 'components/Header'
 import { parseCookies } from 'nookies'
+import { getTablesRequest } from 'services/table'
 
 const Restaurant: NextPage = () => {
   const [table, setTable] = useState('')
+  const [tables, setTables] = useState<{ id: string; name: string }[]>([])
   const router = useRouter()
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTable(e.target.value)
   }
+
+  useEffect(() => {
+    const fetchTables = async () => {
+      const { data } = await getTablesRequest()
+      setTables(data)
+    }
+
+    fetchTables()
+  }, [])
 
   return (
     <>
@@ -27,10 +38,12 @@ const Restaurant: NextPage = () => {
         <Text fontSize="xl" fontWeight="bold">
           Restaurante Xpto
         </Text>
-        <Select placeholder="Selecione a mesa" onChange={handleSelect} maxWidth="350px">
-          <option value="mesa1">Mesa 1</option>
-          <option value="mesa2">Mesa 2</option>
-          <option value="mesa3">Mesa 3</option>
+        <Select placeholder="Selecione a mesa" onChange={handleSelect} maxWidth="350px" mt={5}>
+          {tables.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
+          ))}
         </Select>
         <Button colorScheme="blue" onClick={() => router.push(`/restaurante/${table}`)} mt={5} disabled={!table}>
           Selecionar mesa

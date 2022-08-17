@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Box, Text, Icon, IconButton } from '@chakra-ui/react'
 import { FiLogOut } from 'react-icons/fi'
-
-import type { NextPage } from 'next'
+import { AuthContext } from 'contexts/AuthContext'
+import { ChevronLeftIcon } from '@chakra-ui/icons'
+import { useRouter } from 'next/router'
 
 export const headerHeight = 75
 
-const Header: NextPage = () => {
+type Props = {
+  backButton?: boolean
+}
+
+const Header = ({ backButton }: Props) => {
+  const { logout } = useContext(AuthContext)
+  const router = useRouter()
+
   return (
     <Box
       as="header"
@@ -17,7 +25,24 @@ const Header: NextPage = () => {
       justifyContent="center"
       position="relative"
     >
-      <IconButton aria-label="Logout" icon={<Icon as={FiLogOut} />} position="absolute" right={4} top={4} />
+      {backButton && (
+        <IconButton
+          aria-label="Voltar página"
+          icon={<ChevronLeftIcon />}
+          onClick={router.back}
+          position="absolute"
+          left={4}
+          top={4}
+        />
+      )}
+      <IconButton
+        aria-label="Logout"
+        icon={<Icon as={FiLogOut} />}
+        position="absolute"
+        right={4}
+        top={4}
+        onClick={logout}
+      />
       <Text align="center" fontSize="2xl" fontWeight="bold" fontStyle="italic">
         Succotash
       </Text>

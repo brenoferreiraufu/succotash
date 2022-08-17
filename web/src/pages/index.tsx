@@ -1,7 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import NextLink from 'next/link'
-import { Flex, Button, Input, InputGroup, InputRightElement, FormControl, FormLabel, Link } from '@chakra-ui/react'
+import {
+  useToast,
+  Flex,
+  Button,
+  Input,
+  InputGroup,
+  InputRightElement,
+  FormControl,
+  FormLabel,
+  Link
+} from '@chakra-ui/react'
 import type { NextPage } from 'next'
+import { AuthContext } from 'contexts/AuthContext'
+import { useRouter } from 'next/router'
 
 type LoginForm = {
   username: string
@@ -10,6 +22,9 @@ type LoginForm = {
 
 const Login: NextPage = () => {
   const [show, setShow] = useState(false)
+  const { signIn } = useContext(AuthContext)
+  const toast = useToast()
+  const router = useRouter()
 
   const [loginFormValues, setLoginFormValues] = useState<LoginForm>({
     username: '',
@@ -25,9 +40,18 @@ const Login: NextPage = () => {
     }))
   }
 
-  const handleSubmitForm = (e: React.FormEvent) => {
+  const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.table(loginFormValues)
+    try {
+      await signIn(loginFormValues)
+      router.push('/restaurante')
+    } catch (error) {
+      toast({
+        title: 'Não foi possível se autenticar',
+        status: 'error',
+        isClosable: true
+      })
+    }
   }
 
   return (
