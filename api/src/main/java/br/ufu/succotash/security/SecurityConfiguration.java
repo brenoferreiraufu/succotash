@@ -36,8 +36,6 @@ public class SecurityConfiguration {
                 .antMatchers(HttpMethod.POST, "/api/v1/order").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/order/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/order/*/pay").permitAll()
-
-
                 .anyRequest().authenticated());
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
