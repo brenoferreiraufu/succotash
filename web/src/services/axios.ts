@@ -9,7 +9,7 @@ export function getAPIClient(ctx?: any) {
   const { 'nextauth.token': token } = parseCookies(ctx)
 
   const api = axios.create({
-    baseURL: 'http://localhost:3333'
+    baseURL: process.env.NEXT_PUBLIC_API_URL
   })
 
   api.interceptors.request.use((config) => {

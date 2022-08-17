@@ -10,10 +10,12 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  IconButton
+  IconButton,
+  useToast
 } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
+import { registerUserRequest } from 'services/user'
 
 type RegisterForm = {
   fullName: string
@@ -33,6 +35,7 @@ const Register: NextPage = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const router = useRouter()
+  const toast = useToast()
 
   const passwordMatch = registerFormValues.password === registerFormValues.confirmPassword
 
@@ -46,12 +49,31 @@ const Register: NextPage = () => {
     }))
   }
 
-  const handleSubmitForm = (e: React.FormEvent) => {
+  const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault()
     if (passwordMatch) {
-      console.table(registerFormValues)
+      const { fullName, password, username } = registerFormValues
+      try {
+        await registerUserRequest({ fullName, password, username })
+        toast({
+          title: 'Usuário cadastrado com sucesso',
+          status: 'success',
+          isClosable: true
+        })
+        router.push('/')
+      } catch (error) {
+        toast({
+          title: 'Não foi possível criar o usuário, tente novamente',
+          status: 'error',
+          isClosable: true
+        })
+      }
     } else {
-      console.log('TODO alerta')
+      toast({
+        title: 'Senhas diferentes',
+        status: 'error',
+        isClosable: true
+      })
     }
   }
 
@@ -60,7 +82,7 @@ const Register: NextPage = () => {
       <IconButton
         aria-label="Voltar página"
         icon={<ChevronLeftIcon />}
-        onClick={() => router.back()}
+        onClick={router.back}
         position="absolute"
         left={8}
         top={5}
