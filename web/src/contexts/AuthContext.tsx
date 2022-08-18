@@ -30,7 +30,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     setIsAuthenticated(true)
 
-    setCookie(undefined, 'nextauth.token', token, {
+    setCookie(null, 'nextauth.token', token, {
+      path: '/',
       maxAge: 60 * 60 * 1 // 1 hour
     })
 
@@ -43,7 +44,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   function logout() {
     setIsAuthenticated(false)
 
-    destroyCookie(undefined, 'nextauth.token')
+    destroyCookie(null, 'nextauth.token', {
+      path: '/'
+    })
 
     api.defaults.headers = {
       ...api.defaults.headers,

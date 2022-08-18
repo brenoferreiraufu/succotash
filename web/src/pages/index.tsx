@@ -57,7 +57,7 @@ const Login: NextPage = () => {
   return (
     <Flex height="100vh" alignItems="center" justifyContent="center">
       <Flex direction="column" p={12} rounded={6} alignItems="center">
-        <img src="/images/logo_transparent.png" alt="Foto de um restaurante" width={250} />
+        <img src="/images/logo_transparent.png" alt="Logo Succotash" width={250} />
         <form onSubmit={handleSubmitForm}>
           <FormControl isRequired>
             <FormLabel>Usuário</FormLabel>

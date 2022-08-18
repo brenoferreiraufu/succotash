@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import type { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import {
@@ -15,11 +15,15 @@ import {
   Th,
   Td,
   TableContainer,
-  TableCaption
+  TableCaption,
+  useToast
 } from '@chakra-ui/react'
 import Header, { headerHeight } from 'components/Header'
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
 import { parseCookies } from 'nookies'
+import { createOrderRequest, editOrderRequest, PostOrderResponse, removeOrderItemRequest } from 'services/order'
+import { getItemsRequest, GetItemsResponse } from 'services/item'
+import { moneyFormat } from 'utils/moneyFormat'
 
 type OrderItem = {
   idItem: string
@@ -27,18 +31,48 @@ type OrderItem = {
 }
 
 const Restaurant: NextPage = () => {
+  const [items, setItems] = useState<GetItemsResponse>()
+  const [order, setOrder] = useState<PostOrderResponse>()
   const [orderItem, setOrderItem] = useState<OrderItem>({
     idItem: '',
     quantity: ''
   })
+
   const router = useRouter()
+  const toast = useToast()
 
   const { tableId } = router.query
 
+  const getTableOrder = useCallback(async () => {
+    try {
+      const { data } = await createOrderRequest({ tableId: tableId as string })
+      setOrder(data)
+    } catch {
+      toast({
+        title: 'Falha ao buscar detalhes do pedido',
+        status: 'error',
+        isClosable: true
+      })
+    }
+  }, [tableId, toast])
+
+  const getItems = useCallback(async () => {
+    try {
+      const { data } = await getItemsRequest()
+      setItems(data)
+    } catch {
+      toast({
+        title: 'Falha ao buscar itens do menu',
+        status: 'error',
+        isClosable: true
+      })
+    }
+  }, [toast])
+
   useEffect(() => {
-    // Api call
-    console.log(tableId)
-  }, [tableId])
+    getTableOrder()
+    getItems()
+  }, [getItems, getTableOrder])
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setOrderItem((oldOrderItem) => ({
@@ -54,17 +88,36 @@ const Restaurant: NextPage = () => {
     }))
   }
 
-  const handleAddOrderItem = () => {
-    if (!orderItem.idItem || !orderItem.quantity) {
-      // TODO alert
-    } else {
-      // Api call invalidate cache
+  const handleAddOrderItem = async () => {
+    if (order) {
+      const items = [
+        ...order.items.map(({ quantity, id }) => ({ orderItemId: id, quantity })),
+        { item: { id: orderItem.idItem }, quantity: Number(orderItem.quantity) }
+      ]
+      try {
+        await editOrderRequest({ orderId: order.id, items })
+      } catch (error) {
+        toast({
+          title: 'Falha ao atualizar pedido',
+          status: 'error',
+          isClosable: true
+        })
+      }
+      await getTableOrder()
     }
   }
 
-  const handleClickRemoveItem = (id: string) => {
-    // api call
-    console.log(`Item ${id} removido`)
+  const handleClickRemoveItem = async (orderItemId: string) => {
+    try {
+      await removeOrderItemRequest({ orderItemId })
+    } catch {
+      toast({
+        title: 'Falha ao remover item do pedido',
+        status: 'error',
+        isClosable: true
+      })
+    }
+    await getTableOrder()
   }
 
   return (
@@ -78,15 +131,15 @@ const Restaurant: NextPage = () => {
         p={3}
       >
         <Text fontSize="xl" fontWeight="bold">
-          Restaurante Xpto
+          Restaurante {order?.restaurantName}
         </Text>
         <Text fontSize="lg" fontWeight="bold">
-          Mesa X
+          {order?.tableName}
         </Text>
         <Text fontSize="sm" fontWeight="bold">
-          Garçom: Fulano
+          Garçom: {order?.userName}
         </Text>
-        <TableContainer mt={10} mb={5}>
+        <TableContainer my={5} overflowY="scroll" maxHeight={300}>
           <Table variant="striped" colorScheme="blackAlpha" size="sm">
             <TableCaption>Detalhamento do pedido</TableCaption>
             <Thead>
@@ -98,62 +151,47 @@ const Restaurant: NextPage = () => {
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>Água</Td>
-                <Td isNumeric>2</Td>
-                <Td>R$ 12,00</Td>
-                <Td>
-                  <IconButton
-                    size="sm"
-                    aria-label="Remover item do pedido"
-                    icon={<DeleteIcon />}
-                    variant="unstyled"
-                    color="red.400"
-                    onClick={() => handleClickRemoveItem('1')}
-                  />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>Água</Td>
-                <Td isNumeric>2</Td>
-                <Td>R$ 12,00</Td>
-                <Td>
-                  <IconButton
-                    size="sm"
-                    aria-label="Remover item do pedido"
-                    icon={<DeleteIcon />}
-                    variant="unstyled"
-                    color="red.400"
-                    onClick={() => handleClickRemoveItem('2')}
-                  />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>Água</Td>
-                <Td isNumeric>2</Td>
-                <Td>R$ 12,00</Td>
-                <Td>
-                  <IconButton
-                    size="sm"
-                    aria-label="Remover item do pedido"
-                    icon={<DeleteIcon />}
-                    variant="unstyled"
-                    color="red.400"
-                    onClick={() => handleClickRemoveItem('3')}
-                  />
-                </Td>
-              </Tr>
+              {order?.items.map(({ item, quantity, id }, index) => (
+                <Tr key={`${index} - ${item.id}`}>
+                  <Td>{item.name}</Td>
+                  <Td isNumeric>{quantity}</Td>
+                  <Td>{moneyFormat(item.price)}</Td>
+                  <Td>
+                    <IconButton
+                      size="sm"
+                      aria-label="Remover item do pedido"
+                      icon={<DeleteIcon />}
+                      variant="unstyled"
+                      color="red.400"
+                      onClick={() => handleClickRemoveItem(id)}
+                    />
+                  </Td>
+                </Tr>
+              ))}
             </Tbody>
           </Table>
         </TableContainer>
         <Flex columnGap={2}>
           <Select placeholder="Selecione" onChange={handleSelect} maxWidth="350px" value={orderItem.idItem}>
-            <option value="1">Item 1</option>
-            <option value="2">Item 2</option>
-            <option value="3">Item 3</option>
+            {items?.map(({ id, name }) => (
+              <option key={id} value={id}>
+                {name}
+              </option>
+            ))}
           </Select>
-          <Input value={orderItem.quantity} placeholder="Quantidade" onChange={handleInputChange} width={220} />
-          <IconButton aria-label="Adicionar ao pedido" icon={<AddIcon />} onClick={handleAddOrderItem} />
+          <Input
+            value={orderItem.quantity}
+            type="number"
+            placeholder="Quantidade"
+            onChange={handleInputChange}
+            width={220}
+          />
+          <IconButton
+            aria-label="Adicionar ao pedido"
+            icon={<AddIcon />}
+            onClick={handleAddOrderItem}
+            disabled={!orderItem.idItem || !orderItem.quantity}
+          />
         </Flex>
         <Button colorScheme="blue" onClick={router.back} mt={5}>
           Voltar
