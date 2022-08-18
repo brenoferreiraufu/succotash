@@ -41,14 +41,16 @@ const ClientOrder: NextPage = () => {
 
   const getTableOrder = useCallback(async () => {
     try {
-      const { data } = await getTableOrderRequest({ tableId: tableId as string })
-      const totalAmount = data.items.reduce((acc, { item, quantity }) => {
-        acc += item.price * quantity
-        return acc
-      }, 0)
+      if (tableId) {
+        const { data } = await getTableOrderRequest({ tableId: tableId as string })
+        const totalAmount = data.items.reduce((acc, { item, quantity }) => {
+          acc += item.price * quantity
+          return acc
+        }, 0)
 
-      setTotal(totalAmount)
-      setOrder(data)
+        setTotal(totalAmount)
+        setOrder(data)
+      }
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error?.response?.status === 404) {
         toast({
@@ -57,7 +59,7 @@ const ClientOrder: NextPage = () => {
         })
       } else {
         toast({
-          title: 'No momento não conseguimos recuperar o pedido, tente novamente mais tarde!',
+          title: 'Falha ao carregar detalhes do pedido',
           status: 'error',
           isClosable: true
         })
@@ -76,18 +78,23 @@ const ClientOrder: NextPage = () => {
     }
   }
 
+  const handleCloseModal = () => {
+    onClose()
+    router.back()
+  }
+
   return (
     <>
       <Flex direction="column" height="100%" alignItems="center" justifyContent="center" p={3}>
         <Container centerContent p={3}>
           <Text fontSize="xl" fontWeight="bold">
-            Restaurante Tropeiro
+            Restaurante {order?.restaurantName}
           </Text>
           <Text fontSize="lg" fontWeight="bold">
-            {order?.tableId}
+            {order?.tableName}
           </Text>
           <Text fontSize="sm" fontWeight="bold">
-            Garçom: {order?.userId}
+            Garçom: {order?.userName}
           </Text>
           <TableContainer my={5} overflowY="scroll" maxHeight={300}>
             <Table variant="striped" colorScheme="blackAlpha" size="sm">
@@ -113,7 +120,7 @@ const ClientOrder: NextPage = () => {
           <Flex justifyContent="space-between" width="full" px={10}>
             <Text>Total:</Text>
             <Text fontSize="lg" fontWeight="bold">
-              {total && moneyFormat(total)}
+              {total !== undefined && moneyFormat(total)}
             </Text>
           </Flex>
           <Button colorScheme="blue" onClick={handleClickPayOrder} mt={5} disabled={!order}>
@@ -122,14 +129,14 @@ const ClientOrder: NextPage = () => {
         </Container>
       </Flex>
 
-      <Modal isOpen={isOpen} onClose={onClose} isCentered size="sm">
+      <Modal isOpen={isOpen} onClose={handleCloseModal} isCentered size="sm">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Pagamento</ModalHeader>
           <ModalCloseButton />
           <ModalBody>Recebemos a confirmação do seu pagamento!</ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+            <Button colorScheme="blue" mr={3} onClick={handleCloseModal}>
               Fechar
             </Button>
           </ModalFooter>

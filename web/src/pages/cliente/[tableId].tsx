@@ -1,23 +1,34 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Flex, Button, Text, Box, Skeleton } from '@chakra-ui/react'
+import { Flex, Button, Text, Box, Skeleton, useToast } from '@chakra-ui/react'
 import Header, { headerHeight } from 'components/Header'
 import { getTableRequest, GetTableResponse } from 'services/table'
 
 const Restaurant: NextPage = () => {
-  const [tableInfo, setTableIndo] = useState<GetTableResponse>()
+  const [tableInfo, setTableInfo] = useState<GetTableResponse>()
   const [loadingTableInfo, setLoadingTableInfo] = useState(true)
+
   const router = useRouter()
+  const toast = useToast()
 
   const { tableId } = router.query
 
   const getTableInfo = useCallback(async () => {
     setLoadingTableInfo(true)
-    const { data } = await getTableRequest({ tableId: tableId as string })
-    setTableIndo(data)
-    setLoadingTableInfo(false)
-  }, [tableId])
+    try {
+      const { data } = await getTableRequest({ tableId: tableId as string })
+      setTableInfo(data)
+    } catch (error) {
+      toast({
+        title: 'Falha ao carregar as informações da mesa',
+        status: 'error',
+        isClosable: true
+      })
+    } finally {
+      setLoadingTableInfo(false)
+    }
+  }, [tableId, toast])
 
   useEffect(() => {
     if (tableId) {
@@ -43,7 +54,7 @@ const Restaurant: NextPage = () => {
           my={5}
         />
         <Text fontSize="xl" fontWeight="bold">
-          {tableInfo?.restaurant.name}
+          Restaurante {tableInfo?.restaurant.name}
         </Text>
         {loadingTableInfo ? (
           <Skeleton height="32px" width={100} />

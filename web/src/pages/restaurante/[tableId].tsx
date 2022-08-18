@@ -15,12 +15,13 @@ import {
   Th,
   Td,
   TableContainer,
-  TableCaption
+  TableCaption,
+  useToast
 } from '@chakra-ui/react'
 import Header, { headerHeight } from 'components/Header'
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
 import { parseCookies } from 'nookies'
-import { createOrderRequest, editOrderRequest, PostOrderResponse } from 'services/order'
+import { createOrderRequest, editOrderRequest, PostOrderResponse, removeOrderItemRequest } from 'services/order'
 import { getItemsRequest, GetItemsResponse } from 'services/item'
 import { moneyFormat } from 'utils/moneyFormat'
 
@@ -38,23 +39,40 @@ const Restaurant: NextPage = () => {
   })
 
   const router = useRouter()
+  const toast = useToast()
 
   const { tableId } = router.query
 
   const getTableOrder = useCallback(async () => {
-    const { data } = await createOrderRequest({ tableId: tableId as string })
-    setOrder(data)
-  }, [tableId])
+    try {
+      const { data } = await createOrderRequest({ tableId: tableId as string })
+      setOrder(data)
+    } catch {
+      toast({
+        title: 'Falha ao buscar detalhes do pedido',
+        status: 'error',
+        isClosable: true
+      })
+    }
+  }, [tableId, toast])
 
-  const getItems = async () => {
-    const { data } = await getItemsRequest()
-    setItems(data)
-  }
+  const getItems = useCallback(async () => {
+    try {
+      const { data } = await getItemsRequest()
+      setItems(data)
+    } catch {
+      toast({
+        title: 'Falha ao buscar itens do menu',
+        status: 'error',
+        isClosable: true
+      })
+    }
+  }, [toast])
 
   useEffect(() => {
     getTableOrder()
     getItems()
-  }, [getTableOrder])
+  }, [getItems, getTableOrder])
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setOrderItem((oldOrderItem) => ({
@@ -73,26 +91,33 @@ const Restaurant: NextPage = () => {
   const handleAddOrderItem = async () => {
     if (order) {
       const items = [
-        ...order.items.map(({ item, quantity }) => ({ item: { id: item.id }, quantity })),
+        ...order.items.map(({ quantity, id }) => ({ orderItemId: id, quantity })),
         { item: { id: orderItem.idItem }, quantity: Number(orderItem.quantity) }
       ]
-      await editOrderRequest({ orderId: order.id, items })
-      // Melhoria retornar o pedido atualizado do PUT
-      // Paliativo \/
+      try {
+        await editOrderRequest({ orderId: order.id, items })
+      } catch (error) {
+        toast({
+          title: 'Falha ao atualizar pedido',
+          status: 'error',
+          isClosable: true
+        })
+      }
       await getTableOrder()
     }
   }
 
-  const handleClickRemoveItem = async (index: number) => {
-    if (order) {
-      const items = [...order.items.map(({ item, quantity }) => ({ item: { id: item.id }, quantity }))]
-      items.splice(index, 1)
-
-      await editOrderRequest({ orderId: order.id, items })
-      // Melhoria retornar o pedido atualizado do PUT
-      // Paliativo \/
-      await getTableOrder()
+  const handleClickRemoveItem = async (orderItemId: string) => {
+    try {
+      await removeOrderItemRequest({ orderItemId })
+    } catch {
+      toast({
+        title: 'Falha ao remover item do pedido',
+        status: 'error',
+        isClosable: true
+      })
     }
+    await getTableOrder()
   }
 
   return (
@@ -106,13 +131,13 @@ const Restaurant: NextPage = () => {
         p={3}
       >
         <Text fontSize="xl" fontWeight="bold">
-          Restaurante Tropeiro
+          Restaurante {order?.restaurantName}
         </Text>
         <Text fontSize="lg" fontWeight="bold">
-          {order?.tableId}
+          {order?.tableName}
         </Text>
         <Text fontSize="sm" fontWeight="bold">
-          Garçom: {order?.userId}
+          Garçom: {order?.userName}
         </Text>
         <TableContainer my={5} overflowY="scroll" maxHeight={300}>
           <Table variant="striped" colorScheme="blackAlpha" size="sm">
@@ -126,7 +151,7 @@ const Restaurant: NextPage = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {order?.items.map(({ item, quantity }, index) => (
+              {order?.items.map(({ item, quantity, id }, index) => (
                 <Tr key={`${index} - ${item.id}`}>
                   <Td>{item.name}</Td>
                   <Td isNumeric>{quantity}</Td>
@@ -138,7 +163,7 @@ const Restaurant: NextPage = () => {
                       icon={<DeleteIcon />}
                       variant="unstyled"
                       color="red.400"
-                      onClick={() => handleClickRemoveItem(index)}
+                      onClick={() => handleClickRemoveItem(id)}
                     />
                   </Td>
                 </Tr>

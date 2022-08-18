@@ -88,7 +88,7 @@ const Register: NextPage = () => {
         top={5}
       />
       <Flex direction="column" px={8} py={5} rounded={6} alignItems="center" justifyContent="center" width="full">
-        <img src="/images/logo_transparent.png" alt="Foto de um restaurante" width={250} />
+        <img src="/images/logo_transparent.png" alt="Logo Succotash" width={250} />
         <Box as="form" onSubmit={handleSubmitForm} mt={-5}>
           <FormControl isRequired>
             <FormLabel>Nome completo</FormLabel>

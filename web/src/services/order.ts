@@ -12,11 +12,15 @@ export type PostOrderResponse = {
       name: string
       price: number
     }
+    id: string
     quantity: number
   }[]
   status: string
   tableId: string
+  tableName: string
   userId: string
+  userName: string
+  restaurantName: string
 }
 
 export async function createOrderRequest({ tableId }: CreateOrderRequest) {
@@ -25,13 +29,19 @@ export async function createOrderRequest({ tableId }: CreateOrderRequest) {
 
 type EditOrderRequest = {
   orderId: string
-  items: { item: { id: string }; quantity: number }[]
+  items: ({ item: { id: string }; quantity: number } | { orderItemId: string; quantity: number })[]
 }
-
-// type EditOrderResponse = {  }
 
 export async function editOrderRequest({ orderId, items }: EditOrderRequest) {
   return api.put(`/order/${orderId}`, { items })
+}
+
+type RemoveOrderItemIdRequest = {
+  orderItemId: string
+}
+
+export async function removeOrderItemRequest({ orderItemId }: RemoveOrderItemIdRequest) {
+  return api.delete(`/order/${orderItemId}`)
 }
 
 export async function payOrderRequest({ orderId }: { orderId: string }) {

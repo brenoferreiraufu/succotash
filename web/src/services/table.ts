@@ -37,11 +37,15 @@ type GetTableOrderResponse = {
       name: string
       price: number
     }
+    id: string
     quantity: number
   }[]
   status: string
   tableId: string
+  tableName: string
   userId: string
+  userName: string
+  restaurantName: string
 }
 
 export async function getTableOrderRequest({ tableId }: GetTableOrderRequest) {
