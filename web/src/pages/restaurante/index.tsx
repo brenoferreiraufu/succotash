@@ -34,9 +34,9 @@ const Restaurant: NextPage = () => {
         justifyContent="center"
         p={12}
       >
-        <Box as="img" src="/images/logo_transparent.png" alt="Foto do restaurante Xpto" width={250} my={5} />
+        <Box as="img" src="/images/logo_transparent.png" alt="Foto do Restaurante Tropeiro" width={250} my={5} />
         <Text fontSize="xl" fontWeight="bold">
-          Restaurante Xpto
+          Restaurante Tropeiro
         </Text>
         <Select placeholder="Selecione a mesa" onChange={handleSelect} maxWidth="350px" mt={5}>
           {tables.map((item) => (

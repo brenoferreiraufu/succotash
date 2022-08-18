@@ -12,12 +12,6 @@ export function getAPIClient(ctx?: any) {
     baseURL: process.env.NEXT_PUBLIC_API_URL
   })
 
-  api.interceptors.request.use((config) => {
-    console.log(config)
-
-    return config
-  })
-
   if (token) {
     api.defaults.headers = {
       ...api.defaults.headers,
