@@ -9,9 +9,10 @@ export const headerHeight = 75
 
 type Props = {
   backButton?: boolean
+  logoutButton?: boolean
 }
 
-const Header = ({ backButton }: Props) => {
+const Header = ({ backButton, logoutButton = true }: Props) => {
   const { logout } = useContext(AuthContext)
   const router = useRouter()
 
@@ -35,14 +36,16 @@ const Header = ({ backButton }: Props) => {
           top={4}
         />
       )}
-      <IconButton
-        aria-label="Logout"
-        icon={<Icon as={FiLogOut} />}
-        position="absolute"
-        right={4}
-        top={4}
-        onClick={logout}
-      />
+      {logoutButton && (
+        <IconButton
+          aria-label="Logout"
+          icon={<Icon as={FiLogOut} />}
+          position="absolute"
+          right={4}
+          top={4}
+          onClick={logout}
+        />
+      )}
       <Text align="center" fontSize="2xl" fontWeight="bold" fontStyle="italic">
         Succotash
       </Text>

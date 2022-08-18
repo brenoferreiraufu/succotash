@@ -38,7 +38,7 @@ const Restaurant: NextPage = () => {
 
   return (
     <>
-      <Header />
+      <Header logoutButton={false} />
       <Flex
         direction="column"
         height={`calc(100% - ${headerHeight}px)`}

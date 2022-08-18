@@ -28,6 +28,7 @@ import {
 import { payOrderRequest, PostOrderResponse } from 'services/order'
 import { moneyFormat } from 'utils/moneyFormat'
 import { getTableOrderRequest } from 'services/table'
+import Header from 'components/Header'
 
 const ClientOrder: NextPage = () => {
   const [order, setOrder] = useState<PostOrderResponse>()
@@ -85,6 +86,7 @@ const ClientOrder: NextPage = () => {
 
   return (
     <>
+      <Header backButton logoutButton={false} />
       <Flex direction="column" height="100%" alignItems="center" justifyContent="center" p={3}>
         <Container centerContent p={3}>
           <Text fontSize="xl" fontWeight="bold">
