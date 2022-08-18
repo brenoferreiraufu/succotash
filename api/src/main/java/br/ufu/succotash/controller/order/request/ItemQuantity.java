@@ -6,7 +6,8 @@ import javax.validation.constraints.NotNull;
 
 public record ItemQuantity(
 
-        @NotNull
+        String orderItemId,
+
         Item item,
 
         @NotNull

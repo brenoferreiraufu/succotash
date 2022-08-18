@@ -11,12 +11,4 @@ public record OrderRequest(
         @NotNull
         List<ItemQuantity> items
 ) {
-    public List<OrderItem> toModel(Order order) {
-        List<OrderItem> orderItems = new ArrayList<>();
-        for (ItemQuantity item: items) {
-            orderItems.add(new OrderItem(order, item.item(), item.quantity()));
-        }
-        return orderItems;
-    }
-
 }

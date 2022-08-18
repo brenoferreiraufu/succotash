@@ -46,4 +46,10 @@ public class OrderController {
         orderService.payOrder(orderId);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{orderItemId}")
+    public ResponseEntity<?> cancelOrderItem(@PathVariable String orderItemId) {
+        orderService.cancelOrderItem(orderItemId);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -2,7 +2,6 @@ package br.ufu.succotash.controller.item;
 
 
 import br.ufu.succotash.controller.item.response.ItemResponse;
-import br.ufu.succotash.controller.table.response.TableResponse;
 import br.ufu.succotash.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,4 +23,6 @@ public class ItemController {
     public ResponseEntity<List<ItemResponse>> findItemByRestaurant() {
         return ResponseEntity.ok(itemService.findItemByRestaurant().stream().map(ItemResponse::build).collect(Collectors.toList()));
     }
+
+
 }

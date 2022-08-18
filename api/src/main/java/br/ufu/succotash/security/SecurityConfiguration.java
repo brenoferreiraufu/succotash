@@ -32,7 +32,11 @@ public class SecurityConfiguration {
                 .antMatchers(HttpMethod.POST,"/api/v1/auth").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/table/*/order").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/table/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/order/*/pay").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/v1/order/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/order/*").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/v1/order/*").permitAll()
                 .anyRequest().authenticated());
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

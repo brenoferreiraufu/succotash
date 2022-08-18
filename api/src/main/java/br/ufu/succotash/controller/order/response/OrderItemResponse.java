@@ -6,7 +6,7 @@ import br.ufu.succotash.domain.model.OrderItem;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record OrderItemResponse(Integer quantity, ItemResponse item) {
+public record OrderItemResponse(String id,  Integer quantity, ItemResponse item) {
 
     public static List<OrderItemResponse> buildList(List<OrderItem> items) {
         return items.stream().map(OrderItemResponse::build)
@@ -14,6 +14,6 @@ public record OrderItemResponse(Integer quantity, ItemResponse item) {
     }
 
     private static OrderItemResponse build(OrderItem item) {
-        return new OrderItemResponse(item.getQuantity(), ItemResponse.build(item.getItem()));
+        return new OrderItemResponse(item.getId(), item.getQuantity(), ItemResponse.build(item.getItem()));
     }
 }
