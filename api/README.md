@@ -11,7 +11,6 @@
 - Junit
 - Postman
 - Heroku
-- ...
 
 ## Ambiente de desenvolvimento
 

@@ -5,9 +5,11 @@ import br.ufu.succotash.controller.auth.response.AuthResponse;
 import br.ufu.succotash.security.jwt.JwtUserDetailsService;
 import br.ufu.succotash.security.jwt.JwtUtil;
 import br.ufu.succotash.service.AuthService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,10 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
-    private final AuthService authService;
+    @Autowired private AuthService authService;
 
     @PostMapping
     public ResponseEntity<?> generateAuthenticationToken(@Valid @RequestBody AuthRequest authRequest) {
