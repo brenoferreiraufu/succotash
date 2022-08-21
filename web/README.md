@@ -1,34 +1,74 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Succotash - Frontend
 
-## Getting Started
+A melhor forma de pagar sua conta em bares e restaurantes
 
-First, run the development server:
+https://github.com/brenoferreiraufu/succotash
 
-```bash
-npm run dev
-# or
-yarn dev
+
+## Tabela de conteúdos
+
+- [Estrutura](#estrutura)
+- [Tecnologias](#tecnologias)
+
+## Estrutura
+
+    root
+    ├── public                         (Entrypoint para a compilação do React)
+    |     ├── images                   (Imagens)
+    ├── src                            (Diretório principal dos arquivos da aplicação)
+    |   ├── components                 (Componentes da aplicação)
+    |   ├── contexts                   (Contexto da aplicação)
+    |   ├── pages                      (Paginás iniciais / rotas)
+    |   ├── services                   (Serviços externos [API])
+    |   ├── styles                     (Estilos da aplicação)
+    |   └── utils                      (Funções úteis)
+    ├── .env.example                   (Exemplo da variaveis de ambiente utilizados na aplicação)
+    ├── .env.local                     (Variaveis de ambiente)
+    ├── README.md                      (breve definição)
+    └── ...                            (Outros arquivos de configuração)
+
+## Tecnologias
+
+- [TypeScript](https://www.typescriptlang.org/)
+- [NextJS](https://nextjs.org/)
+- [Chakra UI](https://chakra-ui.com/)
+- [Eslint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+
+## Montagem do ambiente de desenvolvimento
+
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Yarn](https://classic.yarnpkg.com/lang/en/).
+Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
+
+**Clonar projeto:**
+
+- *https*
+
+```sh
+git clone https://github.com/brenoferreiraufu/succotash.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- *ssh*
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```sh
+git clone git@github.com:brenoferreiraufu/succotash.git
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+**Instalar dependencias:**
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```sh
+yarn
+```
 
-## Learn More
+**Configurar variáveis de ambiente:**
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+touch .env.local
+nano .env.local
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Iniciar o projeto:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```sh
+yarn dev
