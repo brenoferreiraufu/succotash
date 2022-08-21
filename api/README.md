@@ -13,7 +13,7 @@
 - Heroku
 - ...
 
-## Execução
+## Ambiente de desenvolvimento
 
   1. Clone o repósitorio e abra-o em uma IDE (Ex: Intellij)
   2. Instale o docker (https://www.docker.com/products/docker-desktop/) e abra-o
@@ -24,6 +24,21 @@
   7. Acesse o postman (https://web.postman.co/l) e importe a coleção succotash.postman_collection.json localizada na pasta api 
   8. Faça a requisição desejada
  
+ ## Ambiente de homolagação
+ 
+  1. Acesse https://dashboard.heroku.com/
+  2. Realize o login
+  3. Crie um app
+  4. Clone o repósitorio e abra-o em uma IDE (Ex: Intellij)
+  5. Navegue pelo terminal até a pasta https://github.com/brenoferreiraufu/succotash/tree/main/api
+  6. Digite heroku login
+  7. Realize o login 
+  8. Digite heroku git:clone -a ufu-succotash 
+  9. Digite git add .
+  10. Digite commit -am "Update"
+  11. Digite git push heroku head:master
+  12. Para atualizar, repita o passo 9, 10 e por fim digite git push heroku main:main
+  
  ## Funcionalidades
  
  1. GenerateAuthenticationToken -> /api/v1/auth
