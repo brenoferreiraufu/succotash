@@ -117,7 +117,7 @@ const Register: NextPage = () => {
                 onChange={handleInputChange('password')}
               />
               <InputRightElement width="6.5rem">
-                <Button h="1.75rem" size="sm" onClick={handleClickPasswordButton}>
+                <Button h="1.75rem" size="sm" onClick={handleClickPasswordButton} data-testid="show-password">
                   {showPassword ? 'Esconder' : 'Mostrar'}
                 </Button>
               </InputRightElement>
@@ -134,7 +134,12 @@ const Register: NextPage = () => {
                 onChange={handleInputChange('confirmPassword')}
               />
               <InputRightElement width="6.5rem">
-                <Button h="1.75rem" size="sm" onClick={handleClickConfirmPasswordButton}>
+                <Button
+                  h="1.75rem"
+                  size="sm"
+                  onClick={handleClickConfirmPasswordButton}
+                  data-testid="show-confirm-password"
+                >
                   {showConfirmPassword ? 'Esconder' : 'Mostrar'}
                 </Button>
               </InputRightElement>

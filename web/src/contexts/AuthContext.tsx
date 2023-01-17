@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { setCookie, destroyCookie } from 'nookies'
 import Router from 'next/router'
 
@@ -57,4 +57,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return <AuthContext.Provider value={{ isAuthenticated, signIn, logout }}>{children}</AuthContext.Provider>
+}
+
+export function useAuthContext() {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuthProvider should be user within a AuthProvider')
+  }
+  return context
 }

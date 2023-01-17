@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useState } from 'react'
 import NextLink from 'next/link'
 import {
   useToast,
@@ -12,7 +12,7 @@ import {
   Link
 } from '@chakra-ui/react'
 import type { NextPage } from 'next'
-import { AuthContext } from 'contexts/AuthContext'
+import { useAuthContext } from 'contexts/AuthContext'
 import { useRouter } from 'next/router'
 
 type LoginForm = {
@@ -22,7 +22,7 @@ type LoginForm = {
 
 const Login: NextPage = () => {
   const [show, setShow] = useState(false)
-  const { signIn } = useContext(AuthContext)
+  const { signIn } = useAuthContext()
   const toast = useToast()
   const router = useRouter()
 
