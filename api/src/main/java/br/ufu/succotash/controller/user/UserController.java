@@ -30,7 +30,6 @@ public class UserController {
         return ResponseEntity.ok().location(location).build();
     }
 
-
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> findUser(@PathVariable String userId) {
         Optional<User> retrievedUser = userService.findUser(userId);
