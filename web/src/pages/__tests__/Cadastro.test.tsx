@@ -2,7 +2,7 @@ import { render, screen } from 'test/test-utils'
 import { mockedToastFn } from 'test/mocks/useToast'
 import userEvent from '@testing-library/user-event'
 import Cadastro from '../cadastro'
-import { apiMockAdapter } from 'services/api'
+import { apiMockAdapter } from 'test/mocks/api'
 
 const mockedBackFn = jest.fn()
 
