@@ -50,7 +50,10 @@ describe('<Cadastro />', () => {
     }
   }
   beforeAll(() => {
-    apiMockAdapter.onGet('/user').reply(200)
+    apiMockAdapter.onPost('/user').reply(200)
+  })
+  afterAll(() => {
+    apiMockAdapter.reset()
   })
   it('should switch the password and confirm password input to input type text when user click the show button', async () => {
     render(<Cadastro />)
@@ -74,6 +77,10 @@ describe('<Cadastro />', () => {
 
     await user.click(registerButton)
 
-    expect(mockedToastFn).toHaveBeenCalled()
+    expect(mockedToastFn).toHaveBeenCalledWith({
+      title: 'Usuário cadastrado com sucesso',
+      status: 'success',
+      isClosable: true
+    })
   })
 })
