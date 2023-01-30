@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint src --max-warnings=0",
-    "test": "jest --silent",
+    "test": "jest --silent --coverage",
     "test:watch": "jest --watch"
   },
   "dependencies": {

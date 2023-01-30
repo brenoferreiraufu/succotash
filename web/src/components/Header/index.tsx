@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
 import { Box, Text, Icon, IconButton } from '@chakra-ui/react'
 import { FiLogOut } from 'react-icons/fi'
-import { AuthContext } from 'contexts/AuthContext'
+import { useAuthContext } from 'contexts/AuthContext'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
 
@@ -13,7 +12,7 @@ type Props = {
 }
 
 const Header = ({ backButton, logoutButton = true }: Props) => {
-  const { logout } = useContext(AuthContext)
+  const { logout } = useAuthContext()
   const router = useRouter()
 
   return (
