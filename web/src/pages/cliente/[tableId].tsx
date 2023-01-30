@@ -5,7 +5,7 @@ import { Flex, Button, Text, Box, Skeleton, useToast } from '@chakra-ui/react'
 import Header, { headerHeight } from 'components/Header'
 import { getTableRequest, GetTableResponse } from 'services/table'
 
-const Restaurant: NextPage = () => {
+const ClientTable: NextPage = () => {
   const [tableInfo, setTableInfo] = useState<GetTableResponse>()
   const [loadingTableInfo, setLoadingTableInfo] = useState(true)
 
@@ -71,4 +71,4 @@ const Restaurant: NextPage = () => {
   )
 }
 
-export default Restaurant
+export default ClientTable

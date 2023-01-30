@@ -30,7 +30,7 @@ type OrderItem = {
   quantity: string
 }
 
-const Restaurant: NextPage = () => {
+const RestaurantTable: NextPage = () => {
   const [items, setItems] = useState<GetItemsResponse>()
   const [order, setOrder] = useState<PostOrderResponse>()
   const [orderItem, setOrderItem] = useState<OrderItem>({
@@ -218,4 +218,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 }
 
-export default Restaurant
+export default RestaurantTable

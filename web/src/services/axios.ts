@@ -5,6 +5,7 @@ export interface CommonHeaderProperties extends HeadersDefaults {
   Authorization: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getAPIClient(ctx?: any) {
   const { 'nextauth.token': token } = parseCookies(ctx)
 
