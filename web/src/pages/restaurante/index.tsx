@@ -54,7 +54,7 @@ const Restaurant: NextPage = () => {
             </option>
           ))}
         </Select>
-        <Button colorScheme="blue" onClick={() => router.push(`/restaurante/${table}`)} mt={5} disabled={!table}>
+        <Button colorScheme="blue" onClick={() => router.push(`/restaurante/${table}`)} mt={5} isDisabled={!table}>
           Selecionar mesa
         </Button>
       </Flex>

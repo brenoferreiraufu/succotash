@@ -1,6 +1,6 @@
 import { mockedToastFn } from 'test/mocks/useToast'
 
-import { render, screen } from 'test/test-utils'
+import { render, screen, waitFor } from 'test/test-utils'
 import userEvent from '@testing-library/user-event'
 import Restaurant from '..'
 import { apiMockAdapter } from 'test/mocks/api'
@@ -16,11 +16,12 @@ jest.mock('next/router', () => ({
 
 describe('<Restaurant />', () => {
   const user = userEvent.setup()
-  beforeAll(() => {
+  beforeEach(() => {
     apiMockAdapter.onGet('/table/').reply(200, [{ id: '0', name: 'Mesa 0' }])
   })
-  afterAll(() => {
+  afterEach(() => {
     apiMockAdapter.reset()
+    jest.clearAllMocks()
   })
   it('should disable the button if there is no table selected', async () => {
     render(<Restaurant />)
@@ -29,7 +30,7 @@ describe('<Restaurant />', () => {
 
     expect(selectInput).toHaveDisplayValue('Selecione a mesa')
 
-    expect(screen.getByRole('button', { name: /selecionar/i })).toBeDisabled()
+    expect(screen.getByRole('button', { name: /selecionar mesa/i })).toBeDisabled()
   })
   it('should enable the button if a table is selected', async () => {
     render(<Restaurant />)
@@ -45,5 +46,18 @@ describe('<Restaurant />', () => {
 
     expect(selectInput).toHaveDisplayValue('Mesa 0')
     expect(screen.getByRole('button', { name: /selecionar/i })).not.toBeDisabled()
+  })
+  it('should call a toast if the tables request goes wrong', async () => {
+    apiMockAdapter.onGet('/table/').reply(400)
+
+    render(<Restaurant />)
+
+    await waitFor(() => {
+      expect(mockedToastFn).toHaveBeenCalledWith({
+        title: 'Falha ao buscar as mesas do restaurante',
+        status: 'error',
+        isClosable: true
+      })
+    })
   })
 })

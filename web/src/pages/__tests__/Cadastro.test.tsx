@@ -49,10 +49,10 @@ describe('<Cadastro />', () => {
       registerButton
     }
   }
-  beforeAll(() => {
+  beforeEach(() => {
     apiMockAdapter.onPost('/user').reply(200)
   })
-  afterAll(() => {
+  afterEach(() => {
     apiMockAdapter.reset()
   })
   it('should switch the password and confirm password input to input type text when user click the show button', async () => {
